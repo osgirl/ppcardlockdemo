@@ -1,0 +1,132 @@
+<form method="post" action="https://api.paypoint.net/cardlock/fallback" id="paymentForm">
+    <div id="paymentFormInput">
+        <fieldset>
+            <legend>Enter your payment details to complete your order</legend>
+
+            {{#if errorMsg}}
+                <div id="errorMessage">
+                    There was something wrong with your payment:  {{errorMsg}}
+                </div>
+            {{/if}}
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="card_holder_name">Name on Card</label>
+
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="card_holder_name" id="card_holder_name" placeholder="Card Holder's Name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="card_number">Card Number</label>
+
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="card_number" id="card_number" placeholder="Debit/Credit Card Number" required >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="expiry_month">Expiration Date</label>
+
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <select class="form-control col-sm-2" id="expiry_month" name="expiry_month" id="expiry_month" required>
+                                <option value="">Month</option>
+                                <option value="01">Jan (01)</option>
+                                <option value="02">Feb (02)</option>
+                                <option value="03">Mar (03)</option>
+                                <option value="04">Apr (04)</option>
+                                <option value="05">May (05)</option>
+                                <option value="06">June (06)</option>
+                                <option value="07">July (07)</option>
+                                <option value="08">Aug (08)</option>
+                                <option value="09">Sep (09)</option>
+                                <option value="10">Oct (10)</option>
+                                <option value="11">Nov (11)</option>
+                                <option value="12">Dec (12)</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3">
+                            <select class="form-control" id="expiry_year" name="expiry_year" required>
+                                <option value="">Year</option>
+                                <option value="15">2015</option>
+                                <option value="16">2016</option>
+                                <option value="17">2017</option>
+                                <option value="18">2018</option>
+                                <option value="19">2019</option>
+                                <option value="20">2020</option>
+                                <option value="21">2021</option>
+                                <option value="22">2022</option>
+                                <option value="23">2023</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="cvv">Card CVV</label>
+
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="cvv" id="cvv" placeholder="Security Code" required minlength="3" maxlength="4" digits>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <input type="submit" class="btn btn-success" value="Pay Now"></button>
+                </div>
+            </div>
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <input id="card_lock_token" name="card_lock_token" type="hidden">
+        </fieldset>
+    </div>
+</form>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#paymentForm").validate({rules: {
+            card_number: {
+                required: true,
+                creditcard: true,
+                digits:true
+            },
+            cvv :{
+                digits: true
+            }
+        }});
+    });
+</script>
+
+<script src="{{cardlock_endpoint}}" language="JavaScript"></script>
+<script>
+    $(document).ready(function () {
+        var errorHandler = function (response) {
+            console.log("Received a status " + response.status + " response, with message " + response.message);
+        };
+
+        var preSubmit = function () {
+            // Force form validation prior to cardlock submitting the form
+            var form = $("#paymentForm").validate();
+            return form.valid();
+        }
+
+        $(document).ready(function () {
+            // Set up CardLock on the form
+            new CardLock({
+                publishableId: '{{cardlock_pubid}}',
+                formElementId: 'paymentForm',
+                panElementId: 'card_number',
+                cvvElementId: 'cvv',
+                tokenElementId: 'card_lock_token',
+                merchantAction: 'process-payment',
+                errorHandler: errorHandler,
+                preSubmitCallback: preSubmit
+            });
+
+        });
+
+    });
+</script>

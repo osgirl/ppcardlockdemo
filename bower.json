@@ -1,0 +1,10 @@
+{
+  "name": "cardlock_demo",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "2.1.1",
+    "jquery-colorbox" : "1.5.9"
+  },
+  "devDependencies": {
+  }
+}

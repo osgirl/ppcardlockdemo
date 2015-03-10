@@ -1,0 +1,20 @@
+{
+  "name": "cardlockdemo",
+  "description": "Card Lock Demo",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "basic-auth-connect": "^1.0.0",
+    "body-parser": "^1.7.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.0.1",
+    "csurf": "^1.7.0",
+    "express": "4.x",
+    "express-handlebars": "1.2.2",
+    "express-session": "^1.0.2",
+    "morgan": "^1.4.0",
+    "node-cache": "^1.1.0",
+    "node-rest-client": "1.4.1",
+    "node-uuid": "^1.4.3"
+  }
+}

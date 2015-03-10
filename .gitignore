@@ -1,0 +1,11 @@
+*.iml
+target
+.idea
+.tmp
+.sass-cache
+*.log
+*~
+atlassian-ide-plugin.xml
+node_modules
+config.json
+

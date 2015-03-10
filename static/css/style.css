@@ -1,0 +1,57 @@
+
+body {
+    background-color:#dddddd;
+    padding:30px;
+    font-family: sans;
+}
+
+.disabled{
+    background-color: #cccccc;
+    color: #222222;
+}
+
+.active{
+    font-weight:bold;
+}
+
+#expiry_date {
+    max-width:4em;
+}
+
+#paymentFormInput {
+    width: 50em;
+    background-color: #ffffff;
+    padding:20px;
+    border-radius: 10px;
+}
+#paymentFormInput select, #paymentFormInput input {
+    margin-bottom:5px;
+
+}
+
+#expiry_month {
+    width: 8em;
+}
+#expiry_year {
+    width: 6em;
+
+}
+
+#paymentFormInput label.error {
+    font-size: smaller;
+    font-weight: normal;
+    color:red;
+}
+
+#paymentFormInput input.error ,#paymentFormInput select.error{
+    border:1px solid red;
+}
+
+#errorMessage {
+    border : 1px solid darkred;
+    padding: 0.5em;
+    color: red;
+    background-color: lightpink;
+    margin-bottom: 1em;
+    border-radius: 5px;
+}
