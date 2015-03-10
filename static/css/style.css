@@ -18,7 +18,7 @@ body {
     max-width:4em;
 }
 
-#paymentFormInput {
+#paymentFormInput , #infobox{
     width: 50em;
     background-color: #ffffff;
     padding:20px;

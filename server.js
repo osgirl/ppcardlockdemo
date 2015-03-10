@@ -64,11 +64,20 @@ app.use(function (req, res, next) {
     }
 );
 
+
+/**
+ * Home page handler
+ */
+app.get('/', function (req, res, next) {
+    res.render("home");
+});
+
+
 /**
  * start payment handler, creates a payment with some random settings and a random ID,
  * redirects to the start payment page
  */
-app.get('/', function (req, res, next) {
+app.get('/newPayment', function (req, res, next) {
     var id = uuid.v4();
     var payment = {
         state: "UNPAID",
