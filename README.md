@@ -1,9 +1,9 @@
-# Card Lock NodeJS Demo
+# Card Lock Node.js Demo
 
-This is a simple demo that shows PayPoint's CardLock product being used in conjunction with our Advanced Payments API on a nodeJS server.
+This is a simple demo that shows PayPoint's CardLock product being used in conjunction with the PayPoint Advanced Payments API
+on a node.js server.
 
 # Running the demo
-
 First ensure that dependencies are installed:
 
     npm install
@@ -11,7 +11,8 @@ First ensure that dependencies are installed:
 
 ## Configure the app
 
-Create a config.json file based config.json.example:
+Create a config.json file based  on the included config.json.example:
+
 
 	{
 	   "pp_api_user":<API user ID in quotes>

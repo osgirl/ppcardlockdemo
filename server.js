@@ -137,6 +137,8 @@ var ppApiClient = new nodeRestClient({
     user: config.pp_api_user,
     password: config.pp_api_secret
 });
+ppApiClient.registerMethod("payment", apiBaseUrl + "/acceptor/rest/transactions/${installationId}/payment", "POST");
+
 
 function errorRedirect(req, res, id, message) {
     console.log("sending error page to ",id, " with error ",message );
@@ -145,8 +147,9 @@ function errorRedirect(req, res, id, message) {
 }
 
 
-ppApiClient.registerMethod("payment", apiBaseUrl + "/acceptor/rest/transactions/${installationId}/payment", "POST");
-
+/**
+ * Handle a payment form post - this does not do server-side validation, you should do this.
+ */
 paymentRouter.post('/:paymentId/process-payment', csrfProtection, function (req, res, next) {
 
     if (req.payment.state === "PAID") {
@@ -223,15 +226,21 @@ paymentRouter.post('/:paymentId/process-payment', csrfProtection, function (req,
 });
 
 
+/**
+ * Handle a payment complete page - this simply shows the response in the payment state in a simple page.
+ */
 paymentRouter.get('/:paymentId/complete', function (req, res, next) {
     if (req.payment.state != "PAID" ||  req.payment.response == null) {
         console.log("Invalid state, payment not complete");
         res.redirect("/" + req.payment.id + "/");
     }
     res.render('payment_form');
-})
-;
+});
 
+
+/**
+ * Bootstrap the server
+ */
 
 var server = app.listen(app.get('port'), function () {
     console.log('Listening on port %d', server.address().port);
