@@ -57,8 +57,6 @@ app.use(flash());
 
 // Global view attributes
 app.use(function (req, res, next) {
-        res.locals.cardlock_pubid = config.pp_cardlock_publishableid;
-        res.locals.cardlock_endpoint = apiBaseUrl + "/cardlock/scripts/cardLock.js";
         res.locals.errorMsg = req.flash("errorMsg");
         next();
     }
@@ -169,10 +167,13 @@ paymentRouter.post('/:paymentId/process-payment', csrfProtection, function (req,
 
     console.log("Got payment request with body", req.body);
 
-    var cardLockToken = req.body.card_lock_token;
+    var card_number = req.body.card_number;
+    var cvv = req.body.cvv;
     var expiry = req.body.expiry_month + "" + req.body.expiry_year;
     var cardholder =req.body.card_holder_name;
-    console.log("Submitting request with token ", cardLockToken, " and expiry", expiry);
+
+    var maskedPan =card_number.replace(/(\d{4})$/, "************$1");
+    console.log("Submitting request with pan ",maskedPan," and expiry", expiry);
 
     // Payment Transaction Data
     var paymentData = {
@@ -186,7 +187,8 @@ paymentRouter.post('/:paymentId/process-payment', csrfProtection, function (req,
         },
         "paymentMethod": {
             "card": {
-                "cardLockToken": cardLockToken,
+                "pan": card_number,
+                "cv2" : cvv,
                 "expiryDate": expiry,
                 "nickname": "Default Card",
                 "cardHolderName": cardholder,

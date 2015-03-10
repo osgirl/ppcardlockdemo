@@ -1,6 +1,6 @@
 
 
-<form method="post" action="https://api.paypoint.net/cardlock/fallback" id="paymentForm">
+<form method="post" action="process-payment" id="paymentForm">
     <div id="paymentFormInput">
         <fieldset>
             <legend>Enter your payment details to complete your order</legend>
@@ -80,7 +80,6 @@
                 </div>
             </div>
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
-            <input id="card_lock_token" name="card_lock_token" type="hidden">
         </fieldset>
     </div>
 </form>
@@ -102,33 +101,3 @@
     });
 </script>
 
-<script src="{{cardlock_endpoint}}" language="JavaScript"></script>
-<script>
-    $(document).ready(function () {
-        var errorHandler = function (response) {
-            console.log("Received a status " + response.status + " response, with message " + response.message);
-        };
-
-        var preSubmit = function () {
-            // Force form validation prior to cardlock submitting the form
-            var form = $("#paymentForm").validate();
-            return form.valid();
-        }
-
-        $(document).ready(function () {
-            // Set up CardLock on the form
-            new CardLock({
-                publishableId: '{{cardlock_pubid}}',
-                formElementId: 'paymentForm',
-                panElementId: 'card_number',
-                cvvElementId: 'cvv',
-                tokenElementId: 'card_lock_token',
-                merchantAction: 'process-payment',
-                errorHandler: errorHandler,
-                preSubmitCallback: preSubmit
-            });
-
-        });
-
-    });
-</script>
