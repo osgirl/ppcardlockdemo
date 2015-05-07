@@ -1,7 +1,7 @@
 {
-   "pp_api_user":"EMCDD5FW2VFC7EAJ7MC5C7I3LY",
-   "pp_api_secret":"jsIHrCvNG+ceJTltcfyPFQ==",
-   "pp_api_installation":"5300065",
-   "pp_cardlock_publishableid":"xlTMV2YQTbi2bT-dJxHgdQ",
+   "pp_api_user":"<api_user_id>",
+   "pp_api_secret":"<api_password>",
+   "pp_api_installation":"<installation_id>",
+   "pp_cardlock_publishableid":"<cardlock publishable ID>",
    "pp_env" : "MITE"
 }
